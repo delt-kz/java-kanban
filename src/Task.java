@@ -1,7 +1,6 @@
 import java.util.Objects;
 
 public class Task {
-    private static int globalId = 0;
     private int id;
     private String title;
     private String description;
@@ -11,8 +10,15 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
-        id = globalId++;
     }
+
+    public Task(int id, String title, String description, TaskStatus status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+    }
+
 
     public int getId() {
         return id;
