@@ -1,7 +1,28 @@
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+    }
 
+    private static void printAllTasks(TaskManager manager) {
+        System.out.println("Задачи:");
+        for (Task task : manager.getListOfTasks()) {
+            System.out.println(task);
+        }
+        System.out.println("Эпики:");
+        for (Task epic : manager.getListOfEpics()) {
+            System.out.println(epic);
+
+            for (Task task : manager.getSubtasksOfEpic(epic.getId())) {
+                System.out.println("--> " + task);
+            }
+        }
+        System.out.println("Подзадачи:");
+        for (Task subtask : manager.getListOfSubtasks()) {
+            System.out.println(subtask);
+        }
+    }
+
+
+    public static void addTasksForTesting(TaskManager taskManager) {
         Task task1 = new Task("Купить хлеб", "черный, бездрожжевой", TaskStatus.NEW);
         taskManager.createTask(task1);
         Task task2 = new Task("Купить томатный соус", "В небольшой банке", TaskStatus.DONE);
@@ -38,13 +59,6 @@ public class Main {
                 "Оливковое масло, чеснок, добавить томатный соус", TaskStatus.NEW, epic1.getId()));
         taskManager.updateSubtaskById( new Subtask(subtask1OfEpic2.getId(),"Вскипятить воду",
                 "Налить воду в чайник", TaskStatus.NEW, epic2.getId()));
-
-        System.out.println(taskManager.getListOfTasks());
-        System.out.println(taskManager.getListOfEpics());
-        System.out.println(taskManager.getListOfSubtasks());
-
-        taskManager.deleteTaskById(task1.getId());
-        taskManager.deleteEpicById(epic1.getId());
 
         System.out.println(taskManager.getListOfTasks());
         System.out.println(taskManager.getListOfEpics());

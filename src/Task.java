@@ -23,8 +23,9 @@ public class Task {
     public int getId() {
         return id;
     }
+
     // извини иммутабельность :'(
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 
