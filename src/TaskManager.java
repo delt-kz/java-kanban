@@ -2,7 +2,7 @@ import java.util.List;
 
 public interface TaskManager {
 
-    HistoryManager getHistoryManager();
+    List<Task> getHistory();
 
     List<Task> getListOfTasks();
 
@@ -29,8 +29,6 @@ public interface TaskManager {
     void updateEpicById(Epic newEpic);
 
     void deleteEpicById(int id);
-
-    void updateEpicsStatus(int id);
 
     List<Subtask> getListOfSubtasks();
 

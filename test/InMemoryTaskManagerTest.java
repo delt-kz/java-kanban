@@ -18,7 +18,6 @@ class InMemoryTaskManagerTest {
 
     @Test
     public void shouldAddToHistoryAfterUsingGetMethod() {
-        HistoryManager historyManager = manager.getHistoryManager();
         Task task = new Task("Task", "This is task", TaskStatus.NEW);
         manager.createTask(task);
         Epic epic = new Epic("Epic", "This is epic");
@@ -29,7 +28,7 @@ class InMemoryTaskManagerTest {
         manager.getEpicById(epic.getId());
         manager.getSubtaskById(subtask.getId());
         assertEquals(new ArrayList<>(Arrays.asList(task,epic,subtask)),
-                historyManager.getHistory(), "Tasks are not added to history properly");
+                manager.getHistory(), "Tasks are not added to history properly");
         manager.getSubtaskById(subtask.getId());
         manager.getSubtaskById(subtask.getId());
         manager.getSubtaskById(subtask.getId());
@@ -38,8 +37,8 @@ class InMemoryTaskManagerTest {
         manager.getSubtaskById(subtask.getId());
         manager.getSubtaskById(subtask.getId());
         manager.getSubtaskById(subtask.getId());
-        System.out.println(historyManager.getHistory());
-        assertNotEquals(historyManager.getHistory().getFirst(), task, "First element is not removed after 11 elements are added");
+        System.out.println(manager.getHistory());
+        assertNotEquals(manager.getHistory().getFirst(), task, "First element is not removed after 11 elements are added");
     }
 
     //edge cases
