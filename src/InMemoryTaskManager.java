@@ -11,7 +11,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
 
     @Override
-    public List<Task> getHistory(){
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 
@@ -60,7 +60,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Subtask> getSubtasksOfEpic(int id) {
-        if(epics.get(id) == null) return null;
+        if (epics.get(id) == null) return null;
         ArrayList<Subtask> subtasksOfEpic = new ArrayList<>();
         List<Integer> subtaskIds = epics.get(id).getSubtaskIds();
         for (Integer subtaskId : subtaskIds) {
@@ -152,7 +152,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Subtask getSubtaskById(int id) {
         Subtask subtask = subtasks.get(id);
-        if(subtask == null) return null;
+        if (subtask == null) return null;
         historyManager.add(subtask);
         return subtask;
     }
