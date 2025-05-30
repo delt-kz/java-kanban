@@ -1,8 +1,6 @@
 
 public class Main {
     public static void main(String[] args) {
-        TaskManager manager = new InMemoryTaskManager();
-        addTasksForTesting(manager);
     }
 
     private static void printAllTasks(TaskManager manager) {
@@ -57,7 +55,7 @@ public class Main {
         taskManager.updateEpicById(new Epic(epic1.getId(), "Приготовить спагетти", "Одна порций"));
         taskManager.updateEpicById(new Epic(epic2.getId(),"Заварить чай","Зеленый, в пакетике"));
         taskManager.updateSubtaskById(new Subtask(subtask1OfEpic1.getId(),"Сварить лапшу",
-                "На кипящей, подсоленной воде",TaskStatus.DONE, epic1.getId()));
+                "На кипящей, подсоленной воде", TaskStatus.DONE, epic1.getId()));
         taskManager.updateSubtaskById(new Subtask(subtask2OfEpic1.getId(),"Приготовить соус",
                 "Оливковое масло, чеснок, добавить томатный соус", TaskStatus.NEW, epic1.getId()));
         taskManager.updateSubtaskById(new Subtask(subtask1OfEpic2.getId(),"Вскипятить воду",

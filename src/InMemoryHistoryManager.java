@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryHistoryManager implements HistoryManager{
+public class InMemoryHistoryManager implements HistoryManager {
     private final Map<Integer, Node> history = new HashMap<>();
     private Node head;
     private Node tail;
@@ -22,7 +22,7 @@ public class InMemoryHistoryManager implements HistoryManager{
     public List<Task> getHistory() {
         List<Task> historyList = new ArrayList<>();
         Node node = head;
-        while(node != null) {
+        while (node != null) {
             historyList.add(node.value);
             node = node.next;
         }
@@ -31,7 +31,7 @@ public class InMemoryHistoryManager implements HistoryManager{
 
     @Override
     public void remove(int id) {
-        if(history.containsKey(id)) removeNode(history.get(id));
+        if (history.containsKey(id)) removeNode(history.get(id));
     }
 
     public Node linkLast(Task task) {
