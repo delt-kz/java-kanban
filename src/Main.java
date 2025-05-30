@@ -1,5 +1,8 @@
+
 public class Main {
     public static void main(String[] args) {
+        TaskManager manager = new InMemoryTaskManager();
+        addTasksForTesting(manager);
     }
 
     private static void printAllTasks(TaskManager manager) {
@@ -63,5 +66,9 @@ public class Main {
         System.out.println(taskManager.getListOfTasks());
         System.out.println(taskManager.getListOfEpics());
         System.out.println(taskManager.getListOfSubtasks());
+        System.out.println(taskManager.getTaskById(1));
+        System.out.println(taskManager.getTaskById(2));
+
+        System.out.println("History: " + taskManager.getHistory());
     }
 }
