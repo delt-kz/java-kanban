@@ -22,7 +22,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllTasks() {
-        for (Integer id : tasks.keySet()) historyManager.remove(id);
+        for (Integer id : tasks.keySet()) {
+            historyManager.remove(id);
+        }
         tasks.clear();
     }
 
@@ -71,8 +73,12 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllEpics() {
-        for (Integer id : epics.keySet()) historyManager.remove(id);
-        for (Integer id : subtasks.keySet()) historyManager.remove(id);
+        for (Integer id : epics.keySet()) {
+            historyManager.remove(id);
+        }
+        for (Integer id : subtasks.keySet()) {
+            historyManager.remove(id);
+        }
         subtasks.clear();
         epics.clear();
     }
@@ -115,7 +121,9 @@ public class InMemoryTaskManager implements TaskManager {
     private void updateEpicsStatus(int id) {
         Epic epic = epics.get(id);
         if (epic == null) return;
-        if (epic.getSubtaskIds().isEmpty()) epic.setStatus(TaskStatus.NEW);
+        if (epic.getSubtaskIds().isEmpty()) {
+            epic.setStatus(TaskStatus.NEW);
+        }
 
         int countDone = 0;
         int countNew = 0;
@@ -127,9 +135,13 @@ public class InMemoryTaskManager implements TaskManager {
             if (subtask.getStatus() == TaskStatus.NEW) countNew++;
         }
 
-        if (countDone == epic.getSubtaskIds().size()) epic.setStatus(TaskStatus.DONE);
-        else if (countNew == epic.getSubtaskIds().size()) epic.setStatus(TaskStatus.NEW);
-        else epic.setStatus(TaskStatus.IN_PROGRESS);
+        if (countDone == epic.getSubtaskIds().size()) {
+            epic.setStatus(TaskStatus.DONE);
+        } else if (countNew == epic.getSubtaskIds().size()) {
+            epic.setStatus(TaskStatus.NEW);
+        } else {
+            epic.setStatus(TaskStatus.IN_PROGRESS);
+        }
     }
 
 
@@ -140,7 +152,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllSubtasks() {
-        for (Integer id : subtasks.keySet()) historyManager.remove(id);
+        for (Integer id : subtasks.keySet()) {
+            historyManager.remove(id);
+        }
         subtasks.clear();
 
         for (Epic epic : epics.values()) {

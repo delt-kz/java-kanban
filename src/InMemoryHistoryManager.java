@@ -7,7 +7,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     private final Map<Integer, Node> history = new HashMap<>();
     private Node head;
     private Node tail;
-    private int size = 0;
 
     @Override
     public void add(Task task) {
@@ -23,42 +22,45 @@ public class InMemoryHistoryManager implements HistoryManager {
         List<Task> historyList = new ArrayList<>();
         Node node = head;
         while (node != null) {
-            historyList.add(node.value);
-            node = node.next;
+            historyList.add(node.getValue());
+            node = node.getNext();
         }
         return historyList;
     }
 
     @Override
     public void remove(int id) {
-        if (history.containsKey(id)) removeNode(history.get(id));
+        if (history.containsKey(id)) {
+            removeNode(history.get(id));
+        }
     }
 
     public Node linkLast(Task task) {
         Node oldTail = tail;
         Node newNode = new Node(task);
-        newNode.prev = oldTail;
+        newNode.setPrev(oldTail);
         tail = newNode;
-        if (oldTail == null) head = newNode;
-        else oldTail.next = newNode;
-        size++;
+        if (oldTail == null) {
+            head = newNode;
+        } else {
+            oldTail.setNext(newNode);
+        }
         return newNode;
     }
 
     public void removeNode(Node node) {
         if (node == null) return;
-        if (node.prev == null)  {
-            head = node.next;
+        if (node.getPrev() == null)  {
+            head = node.getNext();
         } else {
-            node.prev.next = node.next;
+            node.getPrev().setNext(node.getNext());
         }
-        if (node.next == null) {
-            tail = node.prev;
+        if (node.getNext() == null) {
+            tail = node.getPrev();
         } else {
-            node.next.prev = node.prev;
+            node.getNext().setPrev(node.getPrev());
         }
-        history.remove(node.value.getId());
-        size--;
+        history.remove(node.getValue().getId());
     }
 
 }
