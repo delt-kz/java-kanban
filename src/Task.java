@@ -22,7 +22,7 @@ public class Task {
         return id;
     }
 
-    // извини иммутабельность :'(
+    // извини иммутабельность
     void setId(int id) {
         this.id = id;
     }

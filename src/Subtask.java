@@ -1,4 +1,4 @@
-public class Subtask extends Task{
+public class Subtask extends Task {
     private int epicId;
 
     public Subtask(String title, String description, TaskStatus status, int epicId) {

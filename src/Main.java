@@ -1,3 +1,4 @@
+
 public class Main {
     public static void main(String[] args) {
     }
@@ -52,16 +53,20 @@ public class Main {
         taskManager.updateTaskById(new Task(task1.getId(), "Купить хлеб", "любой", TaskStatus.DONE));
         taskManager.updateTaskById(new Task(task2.getId(), "Купить томатный соус", "В большой банке", TaskStatus.IN_PROGRESS));
         taskManager.updateEpicById(new Epic(epic1.getId(), "Приготовить спагетти", "Одна порций"));
-        taskManager.updateEpicById( new Epic(epic2.getId(),"Заварить чай","Зеленый, в пакетике"));
-        taskManager.updateSubtaskById( new Subtask(subtask1OfEpic1.getId(),"Сварить лапшу",
-                "На кипящей, подсоленной воде",TaskStatus.DONE, epic1.getId()));
-        taskManager.updateSubtaskById( new Subtask(subtask2OfEpic1.getId(),"Приготовить соус",
+        taskManager.updateEpicById(new Epic(epic2.getId(),"Заварить чай","Зеленый, в пакетике"));
+        taskManager.updateSubtaskById(new Subtask(subtask1OfEpic1.getId(),"Сварить лапшу",
+                "На кипящей, подсоленной воде", TaskStatus.DONE, epic1.getId()));
+        taskManager.updateSubtaskById(new Subtask(subtask2OfEpic1.getId(),"Приготовить соус",
                 "Оливковое масло, чеснок, добавить томатный соус", TaskStatus.NEW, epic1.getId()));
-        taskManager.updateSubtaskById( new Subtask(subtask1OfEpic2.getId(),"Вскипятить воду",
+        taskManager.updateSubtaskById(new Subtask(subtask1OfEpic2.getId(),"Вскипятить воду",
                 "Налить воду в чайник", TaskStatus.NEW, epic2.getId()));
 
         System.out.println(taskManager.getListOfTasks());
         System.out.println(taskManager.getListOfEpics());
         System.out.println(taskManager.getListOfSubtasks());
+        System.out.println(taskManager.getTaskById(1));
+        System.out.println(taskManager.getTaskById(2));
+
+        System.out.println("History: " + taskManager.getHistory());
     }
 }

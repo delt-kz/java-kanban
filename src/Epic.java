@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Epic extends Task{
+public class Epic extends Task {
     private List<Integer> subtaskIds;
 
     public Epic(String title, String description) {
