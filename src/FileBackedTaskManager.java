@@ -1,7 +1,5 @@
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,15 +12,15 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
 
     public static FileBackedTaskManager loadFromFile(Path path) {
         FileBackedTaskManager manager = new FileBackedTaskManager(path);
-        try(BufferedReader br = new BufferedReader(new FileReader(path.toFile()))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path.toFile()))) {
             String line;
             br.readLine();
             int maxId = 0;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 String taskType = line.split(",")[1];
                 int taskId = Integer.parseInt(line.split(",")[0]);
                 maxId = Math.max(maxId, taskId);
-                switch (taskType){
+                switch (taskType) {
                     case "TASK":
                         manager.tasks.put(taskId, fromString(line));
                         break;
@@ -44,7 +42,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     public void save() {
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path.toFile()))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path.toFile()))) {
             bw.write("id,type,name,status,description,epic\n");
             for (Map<Integer, ? extends Task> map : List.of(tasks, epics, subtasks)) {
                 for (Integer id : map.keySet()) {
