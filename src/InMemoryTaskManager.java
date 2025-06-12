@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager = Managers.getDefaultHistory();
-    private int taskIdCounter = 0;
-    private final Map<Integer, Task> tasks = new HashMap<>();
-    private final Map<Integer, Epic> epics = new HashMap<>();
-    private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    protected int taskIdCounter = 0;
+    protected final Map<Integer, Task> tasks = new HashMap<>();
+    protected Map<Integer, Epic> epics = new HashMap<>();
+    protected final Map<Integer, Subtask> subtasks = new HashMap<>();
 
     @Override
     public List<Task> getHistory() {
@@ -103,8 +103,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (newEpic == null || !epics.containsKey(newEpic.getId())) return;
         Epic epic = epics.get(newEpic.getId());
         newEpic.setSubtaskIds(epic.getSubtaskIds());
-        updateEpicsStatus(epic.getId());
         epics.put(newEpic.getId(), newEpic);
+        updateEpicsStatus(epic.getId());
     }
 
     @Override
