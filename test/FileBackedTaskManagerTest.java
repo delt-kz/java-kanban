@@ -1,8 +1,10 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +17,17 @@ class FileBackedTaskManagerTest {
 
     @BeforeEach
     public void BeforeEach() throws IOException {
-        manager = new FileBackedTaskManager(File.createTempFile("temp", ".csv").toPath());
+        manager = new FileBackedTaskManager(Files.createTempFile("temp", ".csv"));
+    }
+
+    @Test
+    public void shouldLoadFromFileCorrectly() throws IOException {
+        Path path = Files.createTempFile("temp", ".csv");
+        FileBackedTaskManager manager1 = new FileBackedTaskManager(path);
+        Task task = new Task(1, "Task" , "task", TaskStatus.NEW);
+        manager1.createTask(task);
+        FileBackedTaskManager manager2 = FileBackedTaskManager.loadFromFile(path);
+        assertEquals(manager1.getListOfTasks().getFirst(), manager2.getListOfTasks().getFirst());
     }
 
     @Test
