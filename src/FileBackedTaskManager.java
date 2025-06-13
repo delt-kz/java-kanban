@@ -1,10 +1,10 @@
 import java.io.*;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Map; 
+import java.util.Map;
 
-public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
-    Path path;
+public class FileBackedTaskManager extends InMemoryTaskManager {
+    private final Path path;
 
     public FileBackedTaskManager(Path path) {
         this.path = path;
@@ -17,8 +17,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             br.readLine();
             int maxId = 0;
             while ((line = br.readLine()) != null) {
-                String taskType = line.split(",")[1];
-                int taskId = Integer.parseInt(line.split(",")[0]);
+                String[] splitLine = line.split(",");
+                String taskType = splitLine[1];
+                int taskId = Integer.parseInt(splitLine[0]);
                 maxId = Math.max(maxId, taskId);
                 switch (taskType) {
                     case "TASK":
@@ -36,12 +37,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             }
             manager.taskIdCounter = maxId;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ManagerFileLoadException("Не удалось выгрузить задачи из файла");
         }
         return manager;
     }
 
-    public void save() {
+    private void save() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path.toFile()))) {
             bw.write("id,type,name,status,description,epic\n");
             for (Map<Integer, ? extends Task> map : List.of(tasks, epics, subtasks)) {
@@ -50,7 +51,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                 }
             }
         } catch (IOException e) {
-            throw new ManagerSaveException();
+            throw new ManagerSaveException("Не удалось записать задачи в файл");
         }
     }
 
@@ -92,12 +93,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             default:
                 throw new IllegalArgumentException("Unknown task type" + val[1]);
         }
-    }
-
-    public void see() {
-        System.out.println(tasks);
-        System.out.println(epics);
-        System.out.println(subtasks);
     }
 
     @Override

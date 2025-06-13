@@ -41,4 +41,6 @@ public interface TaskManager {
     void updateSubtaskById(Subtask subtask);
 
     void deleteSubtaskById(int id);
+
+    void printAllTasks();
 }

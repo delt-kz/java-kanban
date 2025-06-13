@@ -199,4 +199,11 @@ public class InMemoryTaskManager implements TaskManager {
         epic.getSubtaskIds().remove(Integer.valueOf(id));
         updateEpicsStatus(epic.getId());
     }
+
+    @Override
+    public void printAllTasks() {
+        System.out.println(tasks);
+        System.out.println(epics);
+        System.out.println(subtasks);
+    }
 }
