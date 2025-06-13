@@ -1,13 +1,6 @@
 
 public class Main {
     public static void main(String[] args) {
-        FileBackedTaskManager taskManager = (FileBackedTaskManager) Managers.getFileBacked();
-
-
-
-        taskManager.updateEpicById(new Epic(1, "Приготовить спагетти", "Одна порция"));
-
-        taskManager.see();
     }
 
     private static void printAllTasks(TaskManager manager) {
