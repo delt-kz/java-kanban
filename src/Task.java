@@ -17,7 +17,6 @@ public class Task {
         this.id = id;
     }
 
-
     public int getId() {
         return id;
     }
