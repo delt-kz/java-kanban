@@ -43,4 +43,8 @@ public interface TaskManager {
     void deleteSubtaskById(int id);
 
     void printAllTasks();
+
+    List<Task> getPrioritizedTasks();
+
+    boolean hasOverlaps(Task task);
 }

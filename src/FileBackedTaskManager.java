@@ -1,5 +1,7 @@
 import java.io.*;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +46,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path.toFile()))) {
-            bw.write("id,type,name,status,description,epic\n");
+            bw.write("id,type,name,status,description,epic,startTime,duration\n");
             for (Map<Integer, ? extends Task> map : List.of(tasks, epics, subtasks)) {
                 for (Integer id : map.keySet()) {
                     bw.write(toString(map.get(id)));
@@ -57,42 +59,63 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private static String toString(Task task) {
         if (task instanceof Subtask subtask) {
-            return String.format("%d,%s,%s,%s,%s,%d\n",
+
+            return String.format("%d,%s,%s,%s,%s,%d,%s,%s\n",
                     subtask.getId(),
                     TaskType.SUBTASK,
                     subtask.getTitle(),
                     subtask.getStatus(),
                     subtask.getDescription(),
-                    subtask.getEpicId());
+                    subtask.getEpicId(),
+                    subtask.getStartTime() != null ? subtask.getStartTime().toString() : "null",
+                    subtask.getDuration() != null ? String.valueOf(subtask.getDuration().toMinutes()) : "null"
+            );
         } else if (task instanceof Epic epic) {
             return String.format("%d,%s,%s,%s,%s\n",
                     epic.getId(),
                     TaskType.EPIC,
                     epic.getTitle(),
                     epic.getStatus(),
-                    epic.getDescription());
+                    epic.getDescription()
+            );
         } else {
-            return String.format("%d,%s,%s,%s,%s\n",
+            return String.format("%d,%s,%s,%s,%s,%s,%s\n",
                     task.getId(),
                     TaskType.TASK,
                     task.getTitle(),
                     task.getStatus(),
-                    task.getDescription());
+                    task.getDescription(),
+                    task.getStartTime() != null ? task.getStartTime().toString() : "null",
+                    task.getDuration() != null ? String.valueOf(task.getDuration().toMinutes()) : "null"
+            );
         }
     }
 
     private static Task fromString(String task) {
         String[] val = task.split(",");
-        switch (val[1]) {
-            case "TASK":
-                return new Task(Integer.parseInt(val[0]), val[2], val[4], TaskStatus.valueOf(val[3]));
-            case "EPIC":
-                return new Epic(Integer.parseInt(val[0]), val[2], val[4]);
-            case "SUBTASK":
-                return new Subtask(Integer.parseInt(val[0]), val[2], val[4], TaskStatus.valueOf(val[3]), Integer.parseInt(val[5]));
-            default:
-                throw new IllegalArgumentException("Unknown task type" + val[1]);
-        }
+        return switch (val[1]) {
+            case "TASK" ->
+                    new Task(
+                            Integer.parseInt(val[0]),
+                            val[2],
+                            val[4],
+                            TaskStatus.valueOf(val[3]),
+                            val[5].equals("null") ? null : LocalDateTime.parse(val[5]),
+                            val[6].equals("null") ? null : Duration.ofMinutes(Long.parseLong(val[6]))
+                    );
+            case "EPIC" -> new Epic(Integer.parseInt(val[0]), val[2], val[4]);
+            case "SUBTASK" ->
+                    new Subtask(
+                            Integer.parseInt(val[0]),
+                            val[2],
+                            val[4],
+                            TaskStatus.valueOf(val[3]),
+                            Integer.parseInt(val[5]),
+                            val[6].equals("null") ? null : LocalDateTime.parse(val[6]),
+                            val[7].equals("null") ? null : Duration.ofMinutes(Long.parseLong(val[7]))
+                    );
+            default -> throw new IllegalArgumentException("Unknown task type" + val[1]);
+        };
     }
 
     @Override

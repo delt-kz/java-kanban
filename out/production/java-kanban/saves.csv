@@ -1,4 +1,19 @@
-id,type,name,status,description,epic
-1,EPIC,Приготовить спагетти,IN_PROGRESS,Одна порция
-2,SUBTASK,Сварить лапшу,DONE,На кипящей подсоленной воде,1
-3,SUBTASK,Приготовить соус,NEW,Оливковое масло чеснок добавить томатный соус,1
+id,type,name,status,description,epic,startTime,duration
+16,TASK,Task,NEW,This is task,null,null
+17,TASK,Task,NEW,This is task,null,null
+19,TASK,Task,NEW,This is task,null,null
+10,TASK,Task,NEW,This is task,null,null
+1,EPIC,Epic,NEW,This is epic
+3,EPIC,Epic,NEW,This is epic
+20,EPIC,Epic,NEW,This is epic
+22,EPIC,Epic,NEW,This is epic
+7,EPIC,Epic,NEW,This is epic
+23,EPIC,Epic,NEW,This is epic
+26,EPIC,Epic,NEW,This is epic
+11,EPIC,Epic,NEW,This is epic
+13,EPIC,Epic,NEW,This is epic
+14,EPIC,Epic,NEW,This is epic
+15,EPIC,Epic,NEW,This is epic
+24,SUBTASK,Subtask,NEW,This is subtask,23,null,null
+25,SUBTASK,Subtask,NEW,This is subtask,23,null,null
+28,SUBTASK,Subtask,NEW,This is subtask,26,null,null
