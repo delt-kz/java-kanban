@@ -1,10 +1,14 @@
 import java.util.Objects;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Task {
     private int id;
     private String title;
     private String description;
     private TaskStatus status;
+    private Duration duration;
+    private LocalDateTime startTime;
 
     public Task(String title, String description, TaskStatus status) {
         this.title = title;
@@ -14,6 +18,17 @@ public class Task {
 
     public Task(int id, String title, String description, TaskStatus status) {
         this(title, description, status);
+        this.id = id;
+    }
+
+    public Task(String title, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
+        this(title, description, status);
+        this.startTime = startTime;
+        this.duration = duration;
+    }
+
+    public Task(int id, String title, String description, TaskStatus status, LocalDateTime startTime, Duration duration) {
+        this(title, description, status, startTime, duration);
         this.id = id;
     }
 
@@ -50,6 +65,29 @@ public class Task {
         this.status = status;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (startTime == null || duration == null) {
+            return null;
+        }
+        return startTime.plus(duration);
+    }
+
     @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
@@ -69,6 +107,8 @@ public class Task {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
                 '}';
     }
 }
