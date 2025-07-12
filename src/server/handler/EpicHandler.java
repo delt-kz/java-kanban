@@ -33,6 +33,7 @@ public class EpicHandler extends BaseHttpHandler<Epic> {
             public void update(Epic epic) {
                 manager.updateEpicById(epic);
             }
+
             public List<Subtask> getSubtasksOfEpic(int epicId) {
                 return manager.getSubtasksOfEpic(epicId);
             }
