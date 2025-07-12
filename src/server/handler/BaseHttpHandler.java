@@ -19,12 +19,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public abstract class BaseHttpHandler<T extends Task> implements HttpHandler {
-    protected static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     public static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(Duration.class, new DurationAdapter().nullSafe())
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter().nullSafe())
             .create();
+    protected static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
     protected TaskAccess<T> access;
+
+    public BaseHttpHandler(TaskAccess<T> access) {
+        this.access = access;
+    }
 
     public void handle(HttpExchange exchange) {
         try {
@@ -65,10 +69,6 @@ public abstract class BaseHttpHandler<T extends Task> implements HttpHandler {
         }
     }
 
-    public BaseHttpHandler(TaskAccess<T> access) {
-        this.access = access;
-    }
-
     public void handleWithId(HttpExchange exchange) throws IOException {
         String[] path = exchange.getRequestURI().getPath().split("/");
         String method = exchange.getRequestMethod();
@@ -106,7 +106,7 @@ public abstract class BaseHttpHandler<T extends Task> implements HttpHandler {
                 String json = new String(exchange.getRequestBody().readAllBytes(), DEFAULT_CHARSET);
                 T task = gson.fromJson(json, getTypeToken());
                 int id = task.getId();
-                if(id != 0) {
+                if (id != 0) {
                     task.setId(id);
                     access.update(task);
                     exchange.sendResponseHeaders(201, -1);
