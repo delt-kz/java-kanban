@@ -18,7 +18,7 @@ public class HistoryHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if(!exchange.getRequestMethod().equals("GET")) {
+        if (!exchange.getRequestMethod().equals("GET")) {
             exchange.sendResponseHeaders(405, -1);
             return;
         }
