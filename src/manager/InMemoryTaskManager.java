@@ -1,10 +1,17 @@
+package manager;
+
+import model.Epic;
+import model.Subtask;
+import model.Task;
+import model.TaskStatus;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager = Managers.getDefaultHistory();
-    private final Set<Task> sortedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+    protected final Set<Task> sortedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
     protected int taskIdCounter = 0;
     protected final Map<Integer, Task> tasks = new HashMap<>();
     protected final Map<Integer, Epic> epics = new HashMap<>();
@@ -277,7 +284,7 @@ public class InMemoryTaskManager implements TaskManager {
                 .anyMatch(t -> isOverlapping(t, task));
         if (overlaps) {
             throw new IllegalStateException(
-                    "Task %d overlaps with existing tasks".formatted(task.getId()));
+                    "model.Task %d overlaps with existing tasks".formatted(task.getId()));
         }
     }
 }

@@ -1,3 +1,7 @@
+package utils;
+
+import model.Task;
+
 public class Node {
     private Task value;
     private Node next;
