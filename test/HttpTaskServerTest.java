@@ -7,7 +7,6 @@ import model.Subtask;
 import model.Task;
 import model.TaskStatus;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -140,8 +139,7 @@ public class HttpTaskServerTest{
                 .POST(HttpRequest.BodyPublishers.ofString(taskJson2))
                 .uri(uri)
                 .build();
-
-        HttpResponse<String> response1 = httpClient.send(request1, HttpResponse.BodyHandlers.ofString());
+        httpClient.send(request1, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response2 = httpClient.send(request2, HttpResponse.BodyHandlers.ofString());
         HttpResponse<String> response3 = httpClient.send(request3, HttpResponse.BodyHandlers.ofString());
 

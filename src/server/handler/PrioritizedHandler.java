@@ -3,10 +3,8 @@ package server.handler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import manager.TaskManager;
-import model.Task;
 
 import java.io.IOException;
-import java.util.List;
 
 import static server.handler.BaseHttpHandler.gson;
 
@@ -20,7 +18,7 @@ public class PrioritizedHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if(!exchange.getRequestMethod().equals("GET")) {
+        if (!exchange.getRequestMethod().equals("GET")) {
             exchange.sendResponseHeaders(405, -1);
             return;
         }

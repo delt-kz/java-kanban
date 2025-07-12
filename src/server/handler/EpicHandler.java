@@ -6,7 +6,6 @@ import model.Epic;
 import model.Subtask;
 import utils.EpicAccess;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
