@@ -1,3 +1,5 @@
+package manager;
+
 import java.nio.file.Paths;
 
 public class Managers {
@@ -10,6 +12,6 @@ public class Managers {
     }
 
     public static TaskManager getFileBacked() {
-        return FileBackedTaskManager.loadFromFile(Paths.get("src/saves.csv"));
+        return FileBackedTaskManager.loadFromFile(Paths.get("resources/saves.csv"));
     }
 }

@@ -1,3 +1,9 @@
+import manager.InMemoryTaskManager;
+import manager.Managers;
+import model.Epic;
+import model.Subtask;
+import model.Task;
+import model.TaskStatus;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,8 +21,8 @@ public class InMemoryHistoryManagerTest extends TaskManagerTest<InMemoryTaskMana
 
     @Test
     public void shouldRemoveFromHistoryDeletedTasks() {
-        Task task1 = new Task("Task", "This is task", TaskStatus.NEW);
-        Task task2 = new Task("Task", "This is task", TaskStatus.NEW);
+        Task task1 = new Task("model.Task", "This is task", TaskStatus.NEW);
+        Task task2 = new Task("model.Task", "This is task", TaskStatus.NEW);
         manager.createTask(task1);
         manager.createTask(task2);
         manager.getTaskById(task1.getId());
@@ -27,21 +33,21 @@ public class InMemoryHistoryManagerTest extends TaskManagerTest<InMemoryTaskMana
         manager.deleteAllTasks();
         assertTrue(manager.getHistory().isEmpty(),
                 "Deleting all tasks does not remove them from history");
-        Epic epic = new Epic("Epic", "This is epic");
+        Epic epic = new Epic("model.Epic", "This is epic");
         manager.createEpic(epic);
-        Subtask subtask = new Subtask("Subtask", "This is subtask", TaskStatus.NEW, epic.getId());
+        Subtask subtask = new Subtask("model.Subtask", "This is subtask", TaskStatus.NEW, epic.getId());
         manager.createSubtask(subtask);
         manager.deleteEpicById(epic.getId());
-        assertTrue(manager.getHistory().isEmpty(), "Subtask of deleted epic is not removed from history");
+        assertTrue(manager.getHistory().isEmpty(), "model.Subtask of deleted epic is not removed from history");
     }
 
     @Test
     public void shouldAddToHistoryAfterUsingGetMethod() {
-        Task task = new Task("Task", "This is task", TaskStatus.NEW);
+        Task task = new Task("model.Task", "This is task", TaskStatus.NEW);
         manager.createTask(task);
-        Epic epic = new Epic("Epic", "This is epic");
+        Epic epic = new Epic("model.Epic", "This is epic");
         manager.createEpic(epic);
-        Subtask subtask = new Subtask("Subtask", "This is subtask", TaskStatus.NEW, epic.getId());
+        Subtask subtask = new Subtask("model.Subtask", "This is subtask", TaskStatus.NEW, epic.getId());
         manager.createSubtask(subtask);
         manager.getTaskById(task.getId());
         manager.getEpicById(epic.getId());

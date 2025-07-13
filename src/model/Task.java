@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Objects;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -37,7 +39,7 @@ public class Task {
     }
 
     // извини иммутабельность
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -102,7 +104,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
+        return "model.Task{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -111,4 +113,6 @@ public class Task {
                 ", startTime=" + startTime +
                 '}';
     }
+
+
 }

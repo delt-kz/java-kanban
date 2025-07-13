@@ -1,3 +1,7 @@
+package manager;
+
+import model.*;
+
 import java.io.*;
 import java.nio.file.Path;
 import java.time.Duration;
@@ -23,17 +27,27 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                 String taskType = splitLine[1];
                 int taskId = Integer.parseInt(splitLine[0]);
                 maxId = Math.max(maxId, taskId);
+                Task task = fromString(line);
                 switch (taskType) {
                     case "TASK":
-                        manager.tasks.put(taskId, fromString(line));
+                        manager.tasks.put(taskId, task);
+                        if (task.getStartTime() != null) {
+                            manager.sortedTasks.add(task);
+                        }
                         break;
                     case "EPIC":
-                        manager.epics.put(taskId, ((Epic) fromString(line)));
+                        manager.epics.put(taskId, ((Epic) task));
+                        if (task.getStartTime() != null) {
+                            manager.sortedTasks.add(task);
+                        }
                         break;
                     case "SUBTASK":
-                        Subtask subtask = (Subtask) fromString(line);
+                        Subtask subtask = (Subtask) task;
                         manager.subtasks.put(taskId, subtask);
                         manager.epics.get(subtask.getEpicId()).getSubtaskIds().add(taskId);
+                        if (subtask.getStartTime() != null) {
+                            manager.sortedTasks.add(subtask);
+                        }
                         break;
                 }
             }
